@@ -3,13 +3,15 @@ import { ScrollView, View, Text, TextInput, StyleSheet, Image, Linking } from 'r
 
 const App = () => {
   return (
+    // Use ScrollView to scroll the screen on mobile
     <ScrollView style={styles.screen}>
       <Image
         source={require('../../assets/images/icon.png')}
         style={styles.image}
         resizeMode="cover"
       />
-
+      
+      // use linking to access url 
       <Text style={styles.link} onPress={() => Linking.openURL('https://cityu.smartcatalogiq.com/2022-2023/ay-2022-2023-catalog/')}>
         View the full catalog here
       </Text>
