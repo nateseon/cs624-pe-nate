@@ -4,6 +4,7 @@ import Heading from './Heading';
 import Input from './Input';
 import Button from './Button';
 import TodoList from './TodoList';
+import TabBar from './TabBar';
 
 let todoIndex = 0;
 
@@ -19,6 +20,7 @@ class App extends Component {
         this.toggleComplete = this.toggleComplete.bind(this);
         this.deleteTodo = this.deleteTodo.bind(this);
         this.inputChange = this.inputChange.bind(this);
+        this.setType = this.setType.bind(this);
     }
 
     deleteTodo(todoIndex) {
@@ -38,7 +40,6 @@ class App extends Component {
     }
 
     inputChange(inputValue) {
-        console.log('Input Value: ', inputValue);
         this.setState({ inputValue });
     }
 
@@ -58,25 +59,35 @@ class App extends Component {
         }));
     }
 
+    setType(type) {
+        this.setState({ type });
+    }
+
     render() {
-        const { inputValue, todos} = this.state;
+        const { inputValue, todos, type } = this.state;
+
         return (
             <View style={styles.container}>
-                <ScrollView
-                  keyboardShouldPersistTaps='always' 
-                  style={styles.content}>
-                    <Heading />
-                    <Input 
-                        inputValue={inputValue}
-                        inputChange={(text) => this.inputChange(text)}
-                    />
-                    <TodoList 
-                        toggleComplete={this.toggleComplete}
-                        deleteTodo={this.deleteTodo}
-                        todos={todos}
-                    />
-                    <Button submitTodo={this.submitTodo} />
-                </ScrollView>
+                <View style={styles.content}>
+                    <ScrollView
+                        keyboardShouldPersistTaps="always"
+                        contentContainerStyle={styles.scrollContainer}
+                    >
+                        <Heading />
+                        <Input 
+                            inputValue={inputValue}
+                            inputChange={(text) => this.inputChange(text)}
+                        />
+                        <TodoList 
+                            toggleComplete={this.toggleComplete}
+                            deleteTodo={this.deleteTodo}
+                            todos={todos}
+                            type={type}
+                        />
+                        <Button submitTodo={this.submitTodo} />
+                        <TabBar type={type} setType={this.setType} />
+                    </ScrollView>
+                </View>
             </View>
         );
     }
@@ -88,8 +99,16 @@ const styles = StyleSheet.create({
         backgroundColor: '#f5f5f5'
     },
     content: {
-        flex: 1,
-        paddingTop: 60
+        flex: 1
+    },
+    scrollContainer: {
+        paddingTop: 60,
+        paddingBottom: 20
+    },
+    tabBar: {
+        borderTopWidth: 1,
+        borderColor: '#ccc',
+        backgroundColor: '#fff'
     }
 });
 
