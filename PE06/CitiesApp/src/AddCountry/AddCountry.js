@@ -9,29 +9,37 @@ class AddCountry extends React.Component {
     currency: '',
   };
 
+  // Handle input changes
   onChangeText = (key, value) => {
     this.setState({ [key]: value });
   };
 
+  // Submit the form and navigate to the Countries list
   submit = () => {
     const { country, currency } = this.state;
     if (country === '' || currency === '') {
       alert('please complete form');
       return;
     }
+
     const newCountry = {
       country,
       currency,
       id: uuid.v4(),
     };
+
     this.props.addCountry(newCountry);
+
     this.setState(
       {
         country: '',
         currency: '',
       },
       () => {
-        this.props.navigation.navigate('Countries');
+        // Navigate using nested navigation
+        this.props.navigation.navigate('CountriesNav', {
+          screen: 'Countries',
+        });
       }
     );
   };

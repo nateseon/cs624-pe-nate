@@ -14,6 +14,7 @@ import Cities from './src/Cities/Cities';
 import City from './src/Cities/City';
 import AddCity from './src/AddCity/AddCity';
 import Countries from './src/Countries/Countries';
+import Country from './src/Countries/Country';
 import AddCountry from './src/AddCountry/AddCountry';
 import { colors } from './src/theme';
 
@@ -43,6 +44,31 @@ function CitiesStackScreen({ navigation, route, cities, addCity, addLocation }) 
         children={(props) => (
           <City {...props} cities={cities} addCity={addCity} addLocation={addLocation} />
         )}
+      />
+    </Stack.Navigator>
+  );
+}
+
+// Stack navigator for Countries-related screens
+function CountriesStackScreen({ navigation, countries }) {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerStyle: {
+          backgroundColor: colors.primary,
+        },
+        headerTintColor: '#fff',
+      }}
+    >
+      <Stack.Screen
+        name="Countries"
+        children={(props) => (
+          <Countries {...props} countries={countries} />
+        )}
+      />
+      <Stack.Screen
+        name="Country"
+        component={Country}
       />
     </Stack.Navigator>
   );
@@ -118,9 +144,9 @@ export default class App extends Component {
             )}
           />
           <Tab.Screen
-            name="Countries"
+            name="CountriesNav"
             children={(props) => (
-              <Countries
+              <CountriesStackScreen
                 {...props}
                 countries={this.state.countries}
               />
